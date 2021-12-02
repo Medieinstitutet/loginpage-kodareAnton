@@ -2,7 +2,12 @@
 
 // Array med alla passwords & namn
 
-let ppl = [
+const ppl = [
+
+    {
+        name: "oliver",
+        password: "test",
+    },
     {
     name: "anton",
     password: "test",
@@ -25,6 +30,11 @@ let ppl = [
 }];
 console.log(ppl);
 
+// lägg till i localstrage med hjälp av JSON localStorage
+localStorage.setItem("ppl", JSON.stringify(ppl));
+let getPpl = JSON.parse(localStorage.getItem(ppl));
+
+
 
 // Ett click event med på logginknappen
 var btn = document.getElementById("btn")
@@ -36,15 +46,26 @@ btn.addEventListener("click", function(){
 
     for (i = 0; i < ppl.length; i++) {
         if (name == ppl[i].name && password == ppl[i].password) {
-            console.log(name + " " + "Välkommen till din sida")
+            text.innerHTML = name + "<p> Välkommen till din sida </p>" + "<button id=`logOut´>logga ut</button>"
+            console.log(name + "<p> Välkommen till din sida </p>" + "<button id=`logOut´>logga ut</button>")
             return
         }
     }
     console.error("Fel användarnamn eller lössenord")
+    text.innerHTML =
+    "<style: color:red>" + "<p id=`red´>Fel användarnamn eller lössenord</p>"
 });
 
-// lägg till i localstrage med hjälp av JSON localStorage
-localStorage.setItem("ppl", JSON.stringify(ppl));
-let getPpl = JSON.parse(localStorage.getItem(ppl));
+
+
 
 // logga ut event 
+
+logOut.addEventListener("click", function(){
+
+    var logOut = document.getElementById("logOut")
+    
+    logOut = localStorage.clear();
+    location.reload();
+
+});
