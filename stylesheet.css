@@ -22,7 +22,7 @@ fieldset {
   justify-content: center;
   width: 200px;
   height: 200px;
-
+  margin-bottom: 10px;
   border: rgb(182, 136, 10) 2px solid;
 }
 
@@ -61,4 +61,5 @@ button #red {
 
 p {
   color: white;
+  text-align: center;
 }

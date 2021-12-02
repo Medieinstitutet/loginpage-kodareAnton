@@ -2,7 +2,7 @@
 
 // Array med alla passwords & namn
 
-const ppl = [
+let ppl = [
 
     {
         name: "oliver",
@@ -30,13 +30,9 @@ const ppl = [
 }];
 console.log(ppl);
 
-// lägg till i localstrage med hjälp av JSON localStorage
-localStorage.setItem("ppl", JSON.stringify(ppl));
-let getPpl = JSON.parse(localStorage.getItem(ppl));
 
 
-
-// Ett click event med på logginknappen
+// Ett click event med på logginknappen 
 var btn = document.getElementById("btn")
 
 btn.addEventListener("click", function(){
@@ -57,15 +53,41 @@ btn.addEventListener("click", function(){
 });
 
 
+    // skapa nya loggin till array
+    const addBtn = document.getElementById("addbtn")
+    const addPassword = document.getElementById("addpassword")
+    const addName = document.getElementById("addname")
+
+    addBtn.addEventListener("click", function(){
+
+    const key = addName.value
+    const value = addPassword.value
+
+
+    // försöker ta med informationen till localstorage
+    if (key && value) {
+    localStorage.setItem("name:", key);
+    localStorage.setItem("password:", value);
+    location.reload();
+    }
+
+    // lägg till i localstrage med hjälp av JSON localStorage
+    localStorage.setItem("ppl", JSON.stringify(ppl));
+    let getPpl = JSON.parse(localStorage.getItem("ppl"));
+        getPpl.push(key, value);
+        localStorage.setItem("ppl", JSON.stringify(getPpl));
+
+        console.log(key, value);
+    });
+
+    for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    console.log(key, value);
+    }
 
 
 // logga ut event 
 
-logOut.addEventListener("click", function(){
 
-    var logOut = document.getElementById("logOut")
-    
-    logOut = localStorage.clear();
-    location.reload();
 
-});
