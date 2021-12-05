@@ -89,3 +89,9 @@ p {
 #box button {
   border: black solid 2px;
 }
+
+#welcome {
+  color: #000000;
+  font-size: 18px;
+  text-align: center;
+}

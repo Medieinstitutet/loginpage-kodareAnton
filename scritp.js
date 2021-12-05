@@ -1,3 +1,15 @@
+
+
+///////////////// hämar om det finns någon användare redan inloggad//////////////////////////
+const loggedInUser = localStorage.getItem("loggedInUser")
+const JSONLoggedInUser = JSON.parse(loggedInUser)
+
+    if (JSONLoggedInUser){
+        text.innerHTML = 
+        "<div id=box>" + JSONLoggedInUser.name + "<p> Välkommen till din sida </p>" + "<button id='logOut' onclick='logOut()'>logga ut</button>" + "<div>"
+        console.log(JSONLoggedInUser);
+    }
+
 //Function to print the content of local storage to console
 function printLocalStorage() {
     console.log('Local Storage:')
@@ -9,43 +21,8 @@ function printLocalStorage() {
 }
 
 function getPeople() {
-    return JSON.parse(localStorage.getItem('ppl'))
+    return JSON.parse(localStorage.getItem('ppl')) || []
 }
-// Array med alla passwords & namn
-
-let ppl = [
-
-    {
-    name: "oliver",
-    password: "test",
-    },
-    {
-    name: "anton",
-    password: "test",
-},
-{
-    name: "janne",
-    password: "test",
-},
-{
-    name: "adam",
-    password: "test",
-},
-{
-    name: "fillippa",
-    password: "test",
-},
-{
-    name: "markus",
-    password: "test",
-}];
-
-console.log(ppl);
-
-/////////////////////// pusha array till local storage////////////////
-
-
-
 
 /////////////////////// Ett click event med på logginknappen /////////////////////////////////////
 var btn = document.getElementById("btn")
@@ -55,13 +32,16 @@ btn.addEventListener("click", function(){
 
     const localStoragePeople = getPeople()
     console.log('Local storage people', localStoragePeople)
+
     var name = document.getElementById("name").value;
     var password = document.getElementById("password").value;
 
     for (let i = 0; i < localStoragePeople.length; i++) {
         console.log(localStoragePeople[i])
         console.log(localStoragePeople[i].name, localStoragePeople[i].password)
-        if (name == localStoragePeople[i].name && password == localStoragePeople[i].password) {
+
+        if (name == localStoragePeople[i].name && password == localStoragePeople[i].password){
+            localStorage.setItem("loggedInUser", JSON.stringify(localStoragePeople[i]))
             text.innerHTML = 
             "<div id=box>" + name + "<p> Välkommen till din sida </p>" + "<button id='logOut' onclick='logOut()'>logga ut</button>" + "<div>"
             return
@@ -74,7 +54,7 @@ btn.addEventListener("click", function(){
 });
 
 
-// skapa nya loggin till array
+// skapa nya loggin till array/localstorage
 const addBtn = document.getElementById("addbtn")
 
 ////adda användare till local storage
@@ -88,9 +68,12 @@ addBtn.addEventListener("click", function(){
 
     // lägg till i localstrage med hjälp av JSON localStorage
 
-    let getPpl = JSON.parse(localStorage.getItem("ppl"));
+    let getPpl = getPeople()
     getPpl.push({"name": key, "password": value});
     localStorage.setItem("ppl", JSON.stringify(getPpl));
+
+    text.innerHTML = "<p id='welcome'> Välkommen ny användare </p>"
+
     printLocalStorage();
 });
 
@@ -100,4 +83,5 @@ printLocalStorage();
 function logOut() {
 
     text.innerHTML = ""
+    localStorage.removeItem("loggedInUser")
 }
